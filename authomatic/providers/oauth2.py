@@ -205,9 +205,11 @@ class OAuth2(providers.AuthorizationProvider):
     # Exposed methods
     #===========================================================================
 
-
     @classmethod
     def to_tuple(cls, credentials):
+        if credentials.token_type == 'bearer':
+            credentials.token_type = cls.BEARER
+
         return (credentials.token,
                 credentials.refresh_token,
                 credentials.expiration_time,
